@@ -1,0 +1,43 @@
+hostname: localhost:8081
+security:
+   oauth2:
+      client:
+         clientId: 
+         clientSecret: 
+         accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+         userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+         clientAuthenticationScheme: form
+         scope: openid, email, profile
+      resource:
+         userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+         preferTokenInfo: true
+spring:
+   jpa:
+      properties:
+         hibernate:
+            hbm2ddl:
+               auto: update
+            temp:
+               use_jdbc_metadata_defaults: false
+      database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+   datasource:
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://localhost/postgres
+      username: 
+      password: 
+   mail:
+      host: smtp.yandex.ru
+      username: 
+      password: 
+      port: 
+      protocol: smtps
+mail:
+   debug: true
+server:
+   port: 8081
+management:
+   endpoint:
+      shutdown:
+         enabled: true
+   health:
+      shown-details: always

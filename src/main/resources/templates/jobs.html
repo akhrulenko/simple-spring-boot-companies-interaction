@@ -1,0 +1,18 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<title>Jobs</title>
+</head>
+
+<body>
+	<th:block th:each="job : ${jobs}">
+		<a th:href="'/jobs/' + ${job.id}">
+			<h3 th:text="${job.title}"></h3>
+			<p th:text="${job.description}"></p>
+			<p th:text="${job.customer == null ? 'Individual' : job.customer.name}"></p>
+		</a>
+		<hr>
+	</th:block>
+</body>
+
+</html>

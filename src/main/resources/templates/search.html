@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Search</title>
+</head>
+
+<body>
+
+
+	<th:block th:switch="${type}">
+		<div th:case="'jobs'">
+			<th:block th:each="entity : ${entities}">
+				<a th:href="${'jobs/' + entity.id}">
+					<h3>[[${entity.title}]]</h3>
+					<p>[[${entity.description}]]</p>
+					<p>[[${entity.customer == null ? '' : entity.customer.name}]]</p>
+					<p>[[${entity.creator.name}]]</p>
+				</a>
+				<hr>
+			</th:block>
+		</div>
+		<div th:case="'users'">
+			<th:block th:each="entity : ${entities}">
+				<a th:href="${'users/' + entity.id}">
+					<img th:src="${entity.userpic}" th:alt="${entity.name}">
+					<h3>[[${entity.name}]]</h3>
+					<p>Email: [[${entity.email}]]</p>
+					<p>Company: [[${entity.employerCompany == null ? 'Individual' : entity.employerCompany.name}]]</p>
+				</a>
+				<hr>
+			</th:block>
+		</div>
+		<div th:case="'companies'">
+			<th:block th:each="entity : ${entities}">
+				<a th:href="${'companies/' + entity.id}">
+					<h3>[[${entity.name}]]</h3>
+					<p>Address: [[${entity.address.toString()}]]</p>
+					<p>Site: [[${entity.site}]]</p>
+					<p>Director: [[${entity.director.name}]]</p>
+				</a>
+				<hr>
+			</th:block>
+		</div>
+	</th:block>
+
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<title>Stream</title>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+</head>
+
+<body>
+	<video>
+	</video>
+
+	<canvas>
+	</canvas>
+
+	<img alt="" src="">
+
+	<script th:inline="javascript">
+	
+		(function(){
+			var video = document.querySelector("video");
+			var canvas = document.querySelector("canvas");
+			var img = document.querySelector("img");			
+			var context = canvas.getContext('2d');
+			
+			var stompClient = null;
+			var socket = new SockJS('/chats');
+			stompClient = Stomp.over(socket);
+			stompClient.connect({}, function (frame) {
+				stompClient.subscribe('/topic/chats/stream', function (msg) {
+					showImg(msg.body);
+				});
+			});
+			
+			var constraints = {
+					video:true,
+					audio:false
+			}
+			
+			navigator.mediaDevices.getUserMedia(constraints).then(function(stream){
+				video.srcObject = stream;
+				video.play();
+			}).catch(function(err){
+				
+			});
+			
+			setInterval(main, 100);
+			
+			function main(){
+				drawCanvas();
+				 readCanvas();
+				 sendSrc();
+			}
+			
+			function drawCanvas(){
+				context.drawImage(video, 0,0,canvas.width, canvas.height);
+			}
+			
+			var charArray = null;
+			function readCanvas(){
+				var canvasData = canvas.toDataURL('image/jpg', 1);
+				var decodeAsString = atob(canvasData.split(',')[1]);
+				
+				charArray = [];
+				
+				for(var i = 0; i < decodeAsString.length; i++){
+					charArray.push(decodeAsString.charCodeAt(i));
+				}
+			}
+			
+			function sendSrc(){
+				var url = URL.createObjectURL(new Blob([new Uint8Array(charArray)], {
+					type:'image/jpeg'
+				}));
+			stompClient.send('/app/chats/stream', {}, url);
+			}
+			
+			function showImg(data){
+				img.src = data;
+			}
+			
+		})();
+	
+	
+	</script>
+</body>
+
+</html>

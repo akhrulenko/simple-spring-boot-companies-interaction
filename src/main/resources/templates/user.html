@@ -1,0 +1,42 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<title th:utext="${username}"></title>
+</head>
+
+<body>
+
+	<img th:src="${userpic}" th:alt="${username}">
+	<p th:text="${username}"></p>
+	<p th:text="${email}"></p>
+
+	<table>
+		<caption>Jobs</caption>
+		<tr>
+			<th></th>
+		</tr>
+		<tr>
+
+		</tr>
+	</table>
+
+	<table>
+		<caption>Companies</caption>
+		<tr>
+			<th>Name</th>
+			<th>Site</th>
+			<th>Address</th>
+		</tr>
+		<tr th:each="comp : ${companies}">
+			<td th:text="${comp.name}"></td>
+			<td th:text="${comp.site}"></td>
+			<td
+				th:text="${comp.address.country} + ' ' + ${comp.address.city} + ' ' + ${comp.address.street} + ' ' + ${comp.address.house}">
+			</td>
+		</tr>
+	</table>
+
+
+</body>
+
+</html>

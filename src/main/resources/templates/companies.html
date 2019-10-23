@@ -1,0 +1,19 @@
+<html>
+
+<head xmlns:th="https://www.thymeleaf.org">
+<title>Companies</title>
+</head>
+
+<body>
+	<th:block th:each="company : ${companies}">
+		<a th:href="'companies/' + ${company.id}">
+			<h3 th:text="${company.name}"></h3>
+			<p th:text="${company.address}"></p>
+			<p th:text="${company.site}"></p>
+			<p th:text="'Director: ' + ${company.director.name}"></p>
+		</a>
+		<hr>
+	</th:block>
+</body>
+
+</html>

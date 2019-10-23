@@ -1,0 +1,42 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<title>Add job</title>
+</head>
+
+<body>
+	<form action="" method="POST">
+		<label for="title">Job Title</label>
+		<input type="text" name="title">
+
+		<br><br>
+
+		<label for="description">Job Description</label>
+		<textarea name="description" id="" cols="30" rows="10"></textarea>
+
+		<br><br>
+
+
+		<select name="company_name" id="">
+			<option value="Individual">Individual</option>
+
+			<br><br>
+
+			<th:block th:each="comp : ${companies}">
+				<option th:value="${comp.name}" th:text="${comp.name}"></option>
+
+				<br><br>
+
+			</th:block>
+		</select>
+
+		<br><br>
+
+
+		<!-- <input name="customer.id" type="hidden" th:value="${id}"> -->
+
+		<button type="submit">Add Job</button>
+	</form>
+</body>
+
+</html>

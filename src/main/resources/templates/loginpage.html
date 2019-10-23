@@ -1,0 +1,20 @@
+<form action="$/loginpage method=" post" id="login_form" class="col" style="max-width: 333px;">
+	<p>
+		<label for="username" style="display: block">Username</label> <input type="text" id="username" name="username"
+			style="min-width: 100%" />
+	</p>
+	<p>
+		<label for="password" style="display: block">Password </label> <input type="password" id="password"
+			name="password" style="min-width: 100%" />
+	</p>
+
+	<p>
+		<label for="code" style="display: block">Code</label> <input type="text" id="code" name="code"
+			style="min-width: 100%" />
+	</p>
+
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+
+	<button type="submit" class="btn btn-primary" style="min-width: 100%;">Log in</button>
+</form>

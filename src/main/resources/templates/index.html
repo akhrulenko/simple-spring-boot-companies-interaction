@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>CompInter</title>
+</head>
+
+<body>
+
+
+	<div sec:authorize="!isAuthenticated()">
+		<a href="/login">Log in</a>
+		<br><br>
+		<a href="/signup">Sign up</a>
+	</div>
+
+	<div sec:authorize="isAuthenticated()">
+		<p th:text="${username}">Hello</p>
+		<img th:src=" ${userpic}" th:alt="${username}">
+
+		<!-- <a href="/profile">Profile</a>
+		<br><br> -->
+
+		<a href="/logout">Log out</a>
+		<br><br>
+
+		<a href="/add-company">Add new company</a>
+		<br><br>
+
+		<a href="/add-job">Add new job</a>
+		<br><br>
+
+		<a href="/users">Users</a>
+		<br><br>
+
+		<a href="/companies">Companies</a>
+		<br><br>
+
+		<a href="/jobs">Jobs</a>
+		<br><br>
+
+
+		<form action="/search" method="GET">
+			<input type="search" name="q">
+			<button type="submit">Search</button>
+			<br>
+			<!-- <label>
+				<input checked type="radio" name="type" value="all">All
+			</label> -->
+
+			<label>
+				<input checked type="radio" name="type" value="jobs">Jobs
+			</label>
+
+			<label>
+				<input type="radio" name="type" value="users">Users
+			</label>
+
+			<label>
+				<input type="radio" name="type" value="companies">Companies
+			</label>
+		</form>
+		<br><br>
+
+		<a href="/rooms">Rooms</a>
+		<br><br>
+
+		<a href="/stream">Stream</a>
+		<br><br>
+
+
+	</div>
+</body>
+
+</html>

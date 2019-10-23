@@ -1,0 +1,33 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+	<title th:utext="${job.title}">Job </title>
+</head>
+
+<body>
+
+	<p>Title:</p>
+	<p th:text="${job.title}"></p>
+
+	<br><br>
+
+	<p>Description:</p>
+	<p th:text="${job.description}"></p>
+
+	<br><br>
+
+
+	<p>Company:</p>
+	<p th:text="${job.customer == null ? 'Individual' : job.customer.name}"></p>
+
+	<br><br>
+
+
+	<p>Creator:</p>
+	<p th:text="${job.creator == null ? '' : job.creator.name}"></p>
+
+	<br><br>
+
+</body>
+
+</html>

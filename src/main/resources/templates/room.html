@@ -1,0 +1,88 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<title>Room [[${roomId}]]</title>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+<script th:inline="javascript">
+
+		var stompClient = null;
+		var chat = [[${ room.id }]];
+		var username = null;
+
+		window.onload = function () {
+			connect();
+		};
+
+		function connect() {
+			var socket = new SockJS('/chats');
+			stompClient = Stomp.over(socket);
+			stompClient.connect({}, function (frame) {
+				username = frame.headers['user-name'];
+				stompClient.subscribe('/topic/chats/' + chat, function (msg) {
+					var parsed = JSON.parse(msg.body);
+					showMessage(username, parsed.sendTime, parsed.message);
+				});
+			});
+		}
+
+		function sendMessage() {
+			var message = document.getElementById('message').value;
+			stompClient.send('/app/chats/' + chat, {}, JSON.stringify({ 'message': message }));
+		}
+
+		function showMessage(sender, sendTime, message) {	
+			var response = document.getElementById('response');
+			
+			var div = document.createElement('div');
+			
+			var senderP = document.createElement('p');
+			var msgP = document.createElement('p');
+			
+			senderP.style.wordWrap = 'break-word';
+			senderP.appendChild(document.createTextNode(sender + " in " + sendTime + " : "));
+			msgP.style.wordWrap = 'break-word';
+			msgP.appendChild(document.createTextNode(message));
+			
+			div.appendChild(senderP);
+			div.appendChild(msgP);
+			
+			response.insertBefore(div, response.firstChild);
+		}
+
+	</script>
+</head>
+
+<body>
+
+
+
+	<div>
+		<input type="text" name="message" id="message">
+		<button type="submit" onclick="sendMessage()">Send</button>
+
+		<th:block th:each="user : ${room.users}">
+			[[${user.name}]],
+		</th:block>
+	</div>
+
+	<div id="response">
+
+		<th:block th:if="${room.messages} != null">
+			<th:block th:each="message : ${room.messages}">
+				<div>
+					<p>[[${message.sender.name}]] in [[${message.sendTime}]] :</p>
+					<p>[[${message.message}]]</p>
+					<br>
+				</div>
+			</th:block>
+		</th:block>
+
+	</div>
+
+
+</body>
+
+</html>

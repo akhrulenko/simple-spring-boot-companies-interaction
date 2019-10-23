@@ -1,0 +1,34 @@
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+<title>Room</title>
+</head>
+
+<body>
+
+
+
+	<form action="" method="POST">
+		<label for="users.name">Companion</label> <input type="text"
+			name="users.name"> <br>
+		<br> <label for="title">Title</label> <input type="text"
+			name="title">
+		<button type="submit">Send</button>
+	</form>
+
+	<th:block th:if="${rooms} != null">
+		<th:block th:each="room : ${rooms}">
+			<a th:href="'rooms/' + ${room.id}">
+				<div>
+					[[${room.title}]]
+					<hr>
+				</div>
+			</a>
+		</th:block>
+	</th:block>
+
+
+
+</body>
+
+</html>
