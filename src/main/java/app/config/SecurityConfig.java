@@ -26,6 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//		auth.inMemoryAuthentication().withUser("1").password("{noop}1").roles("USER");
+//		auth.inMemoryAuthentication().withUser("2").password("{noop}2").roles("ADMIN");
 		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(NoOpPasswordEncoder.getInstance())
 				.usersByUsernameQuery("select u.name,u.password, u.enabled from users u where u.name = ?")
 				.authoritiesByUsernameQuery("select u.name, 'ROLE_USER' from users u where u.name = ?");

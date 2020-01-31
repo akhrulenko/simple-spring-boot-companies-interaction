@@ -2,8 +2,8 @@ hostname: localhost:8081
 security:
    oauth2:
       client:
-         clientId: 
-         clientSecret: 
+         clientId: ${GOOGLE_CLIENT_ID}
+         clientSecret: ${GOOGLE_CLIENT_SECRET}
          accessTokenUri: https://www.googleapis.com/oauth2/v4/token
          userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
          clientAuthenticationScheme: form
@@ -22,14 +22,14 @@ spring:
       database-platform: org.hibernate.dialect.PostgreSQL9Dialect
    datasource:
       driver-class-name: org.postgresql.Driver
-      url: jdbc:postgresql://localhost/postgres
-      username: 
-      password: 
+      url: ${DB_URL}
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
    mail:
       host: smtp.yandex.ru
-      username: 
-      password: 
-      port: 
+      username: ${MAIL_USERNAME}
+      password: ${MAIL_PASSWORD}
+      port: 465
       protocol: smtps
 mail:
    debug: true
